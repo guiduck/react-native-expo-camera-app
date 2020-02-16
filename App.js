@@ -1,9 +1,8 @@
 import React from 'react';
+import { View } from 'react-native';
 
 import CameraPage from './src/CameraPage';
 
-export default class App extends React.Component {
-  render() {
-    return <CameraPage />;
-  }
+export default function App() {
+  return <CameraPage />;
 }
