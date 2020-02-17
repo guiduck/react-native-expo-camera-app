@@ -20,16 +20,18 @@ function CameraPage() {
   const [type, setType] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
-    async function componentDidMount() {
+    async function getPermissions() {
       const camera = await Permissions.askAsync(Permissions.CAMERA);
       const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
 
       const cameraPermission =
         camera.status === 'granted' && audio.status === 'granted';
 
-      setCameraPermission({ cameraPermission });
+      setCameraPermission(cameraPermission);
       console.log('component did mount');
     }
+    console.log('useEffect used');
+    getPermissions();
   }, []);
 
   if (cameraPermission === null) {
@@ -40,33 +42,36 @@ function CameraPage() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <Camera type={type}>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: 'transparent',
-            flexDirection: 'row'
-          }}
-        >
-          <TouchableOpacity
-            style={{ flex: 0.1, alignSelf: 'flex-end', alignItems: center }}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
+    <>
+      {console.log('entered return')}
+      <View style={{ flex: 1 }}>
+        <Camera type={type}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+              flexDirection: 'row'
             }}
           >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-              {' '}
-              Flip{' '}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </Camera>
-    </View>
+            <TouchableOpacity
+              style={{ flex: 0.1, alignSelf: 'flex-end', alignItems: 'center' }}
+              onPress={() => {
+                setType(
+                  type === Camera.Constants.Type.back
+                    ? Camera.Constants.Type.front
+                    : Camera.Constants.Type.back
+                );
+              }}
+            >
+              <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
+                {' '}
+                Flip{' '}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Camera>
+      </View>
+    </>
   );
 }
 
