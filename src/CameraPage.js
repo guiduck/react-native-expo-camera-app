@@ -1,4 +1,5 @@
 import React from 'react';
+import { Audio } from 'expo-av';
 import { Camera } from 'expo-camera';
 import {
   View,
@@ -20,18 +21,28 @@ function CameraPage() {
   const [type, setType] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
-    async function getPermissions() {
-      const camera = await Permissions.askAsync(Permissions.CAMERA);
-      const audio = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
-
-      const cameraPermission =
-        camera.status === 'granted' && audio.status === 'granted';
-
-      setCameraPermission(cameraPermission);
-      console.log('component did mount');
-    }
     console.log('useEffect used');
-    getPermissions();
+
+    (async () => {
+      console.log('b4 cameraStatus');
+      //const { cameraStatus } = await Permissions.askAsync(Permissions.CAMERA);
+      const cameraStatus = await Camera.requestPermissionsAsync();
+      const audio = await Audio.requestPermissionsAsync();
+      //const { audioStatus } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+      //const { status } = await getPermissionsAsync();
+      console.log(cameraStatus.status);
+      console.log(audio.status);
+      //console.log(cameraStatus);
+      //const cameraPermission =
+      setCameraPermission(
+        cameraStatus.status === 'granted' && audio.status === 'granted'
+      );
+      console.log(cameraPermission);
+      //setCameraPermission(cameraPermission);
+      if (cameraPermission) {
+        console.log('permission was set');
+      }
+    })();
   }, []);
 
   if (cameraPermission === null) {
@@ -45,7 +56,7 @@ function CameraPage() {
     <>
       {console.log('entered return')}
       <View style={{ flex: 1 }}>
-        <Camera type={type}>
+        <Camera style={styles.preview} type={type}>
           <View
             style={{
               flex: 1,
