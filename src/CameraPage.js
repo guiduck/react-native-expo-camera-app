@@ -45,6 +45,12 @@ function CameraPage() {
     })();
   }, []);
 
+  snap = async () => {
+    if (this.camera) {
+      let photo = await this.camera.takePictureAsync();
+    }
+  };
+
   if (cameraPermission === null) {
     return <View />;
   }
@@ -56,7 +62,13 @@ function CameraPage() {
     <>
       {console.log('entered return')}
       <View style={{ flex: 1 }}>
-        <Camera style={styles.preview} type={type}>
+        <Camera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={styles.preview}
+          type={type}
+        >
           <View
             style={{
               flex: 1,
