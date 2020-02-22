@@ -1,21 +1,17 @@
 import React from 'react';
 import { Audio } from 'expo-av';
 import { Camera } from 'expo-camera';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity
-} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import * as Permissions from 'expo-permissions';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
-//get window dimensions for styling
-const { width: winWidth, height: winHeight } = Dimensions.get('window');
+import * as ImagePicker from 'expo-image-picker';
+
+import styles from './styles';
 
 function CameraPage() {
-  //camera = null;
+  const cameraRef = useRef();
 
   const [cameraPermission, setCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -28,14 +24,20 @@ function CameraPage() {
       //const { cameraStatus } = await Permissions.askAsync(Permissions.CAMERA);
       const cameraStatus = await Camera.requestPermissionsAsync();
       const audio = await Audio.requestPermissionsAsync();
+      const cameraRollStatus = await Permissions.askAsync(
+        Permissions.CAMERA_ROLL
+      );
       //const { audioStatus } = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
       //const { status } = await getPermissionsAsync();
+      console.log(cameraRollStatus.status);
       console.log(cameraStatus.status);
       console.log(audio.status);
       //console.log(cameraStatus);
       //const cameraPermission =
       setCameraPermission(
-        cameraStatus.status === 'granted' && audio.status === 'granted'
+        cameraStatus.status === 'granted' &&
+          audio.status === 'granted' &&
+          cameraRollStatus.status === 'granted'
       );
       console.log(cameraPermission);
       //setCameraPermission(cameraPermission);
@@ -62,22 +64,14 @@ function CameraPage() {
     <>
       {console.log('entered return')}
       <View style={{ flex: 1 }}>
-        <Camera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          type={type}
-        >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'transparent',
-              flexDirection: 'row'
-            }}
-          >
+        <Camera ref={cameraRef} style={styles.preview} type={type}>
+          <View style={styles.cameraView}>
+            <TouchableOpacity style={styles.cameraTitle}>
+              <FontAwesome name='camera' />
+            </TouchableOpacity>
+
             <TouchableOpacity
-              style={{ flex: 0.1, alignSelf: 'flex-end', alignItems: 'center' }}
+              style={styles.cameraSwitch}
               onPress={() => {
                 setType(
                   type === Camera.Constants.Type.back
@@ -86,10 +80,11 @@ function CameraPage() {
                 );
               }}
             >
-              <Text style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
-                {' '}
-                Flip{' '}
-              </Text>
+              <MaterialCommunityIcons
+                name='camera-switch'
+                style={styles.cameraSwitch}
+              />
+              <Text style={styles.cameraSwitchText}> Flip </Text>
             </TouchableOpacity>
           </View>
         </Camera>
@@ -97,17 +92,5 @@ function CameraPage() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  preview: {
-    height: winHeight,
-    width: winWidth,
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    right: 0,
-    bottom: 0
-  }
-});
 
 export default CameraPage;

@@ -41,5 +41,30 @@ export default StyleSheet.create({
     borderRadius: 76,
     backgroundColor: 'red',
     borderColor: 'transparent'
+  },
+  cameraTitle: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'transparent'
+  },
+  cameraSwitch: {
+    flex: 0.1,
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    color: '#fff',
+    fontSize: 40
+  },
+  cameraSwitchText: {
+    fontSize: 18,
+    marginBottom: 10,
+    color: 'white'
+  },
+  cameraView: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 20
   }
 });
