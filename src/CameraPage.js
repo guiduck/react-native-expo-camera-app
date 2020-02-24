@@ -4,23 +4,27 @@ import { Camera } from 'expo-camera';
 import { View, Text, TouchableOpacity } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { useState, useEffect, useRef } from 'react';
-import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+
+import Toolbar from './Toolbar';
 
 import * as ImagePicker from 'expo-image-picker';
 
 import styles from './styles';
 
 function CameraPage() {
-  const [takePic, setTakePic] = useState();
+  const [flashMode, setFlashMode] = useState(Camera.Constants.FlashMode.Off);
   const cameraRef = useRef();
 
   const [captures, setCaptures] = useState([]);
 
   const [cameraPermission, setCameraPermission] = useState(null);
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
 
   useEffect(() => {
     console.log('useEffect used');
+
+    setFlashMode(flashMode);
+    console.log(flashMode);
 
     (async () => {
       console.log('b4 cameraStatus');
@@ -74,36 +78,15 @@ function CameraPage() {
     <>
       {console.log('entered return')}
       <View style={{ flex: 1 }}>
-        <Camera ref={cameraRef} style={styles.prev} type={type}>
-          <View style={styles.cameraView}>
-            <TouchableOpacity
-              style={styles.cameraTitle}
-              onPress={() => {
-                handdleCapture();
-              }}
-            >
-              <FontAwesome name='camera' />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.cameraSwitch}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}
-            >
-              <MaterialCommunityIcons
-                name='camera-switch'
-                style={styles.cameraSwitch}
-              />
-              <Text style={styles.cameraSwitchText}> Flip </Text>
-            </TouchableOpacity>
-          </View>
-        </Camera>
+        <Camera ref={cameraRef} style={styles.prev} type={cameraType}></Camera>
       </View>
+      <Toolbar
+        flashMode={flashMode}
+        cameraType={cameraType}
+        setFlashMode={setFlashMode}
+        setCameraType={setCameraType}
+        onCapture={handdleCapture}
+      />
     </>
   );
 }
