@@ -11,7 +11,10 @@ import * as ImagePicker from 'expo-image-picker';
 import styles from './styles';
 
 function CameraPage() {
+  const [takePic, setTakePic] = useState();
   const cameraRef = useRef();
+
+  const [captures, setCaptures] = useState([]);
 
   const [cameraPermission, setCameraPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -47,11 +50,18 @@ function CameraPage() {
     })();
   }, []);
 
-  snap = async () => {
-    if (this.camera) {
-      let photo = await this.camera.takePictureAsync();
-    }
+  //opens lybrary to select photos
+  pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images
+    });
   };
+
+  async function handdleCapture() {
+    let photo = await cameraRef.current.takePictureAsync();
+    setCaptures([...captures, photo]);
+    console.log('snap!!');
+  }
 
   if (cameraPermission === null) {
     return <View />;
@@ -64,9 +74,14 @@ function CameraPage() {
     <>
       {console.log('entered return')}
       <View style={{ flex: 1 }}>
-        <Camera ref={cameraRef} style={styles.preview} type={type}>
+        <Camera ref={cameraRef} style={styles.prev} type={type}>
           <View style={styles.cameraView}>
-            <TouchableOpacity style={styles.cameraTitle}>
+            <TouchableOpacity
+              style={styles.cameraTitle}
+              onPress={() => {
+                handdleCapture();
+              }}
+            >
               <FontAwesome name='camera' />
             </TouchableOpacity>
 

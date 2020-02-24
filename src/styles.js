@@ -12,6 +12,9 @@ export default StyleSheet.create({
     right: 0,
     bottom: 0
   },
+  prev: {
+    flex: 1
+  },
   alignCenter: {
     flex: 1,
     alignItems: 'center',
