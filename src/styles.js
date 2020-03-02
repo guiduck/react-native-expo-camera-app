@@ -20,6 +20,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  topToolbar: {
+    width: winWidth,
+    position: 'absolute',
+    height: 100,
+    top: 0
+  },
   bottomToolbar: {
     width: winWidth,
     position: 'absolute',
@@ -69,5 +75,16 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     margin: 20
+  },
+  gallery: {
+    flex: 1,
+    alignSelf: 'flex-start',
+    backgroundColor: 'transparent',
+    marginLeft: 50,
+    margin: 20
+  },
+  galleryText: {
+    color: '#fff',
+    fontSize: 40
   }
 });

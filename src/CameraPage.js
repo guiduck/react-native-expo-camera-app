@@ -55,11 +55,13 @@ function CameraPage() {
   }, []);
 
   //opens lybrary to select photos
-  pickImage = async () => {
+  async function pickImage() {
+    console.log('this is gallery');
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images
     });
-  };
+    console.log(result);
+  }
 
   async function handdleCapture() {
     let photo = await cameraRef.current.takePictureAsync();
@@ -86,6 +88,7 @@ function CameraPage() {
         setFlashMode={setFlashMode}
         setCameraType={setCameraType}
         onCapture={handdleCapture}
+        pickImage={pickImage}
       />
     </>
   );
