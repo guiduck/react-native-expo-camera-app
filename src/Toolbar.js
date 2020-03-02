@@ -22,11 +22,7 @@ function Toolbar({
         <Row>
           <Col style={styles.gallery}>
             <TouchableOpacity onPress={pickImage}>
-              <Ionicons
-                name='ios-photos'
-                style={{ color: '#fff', fontSize: 40 }}
-                size={30} //this size is not changing
-              />
+              <Ionicons name='ios-photos' style={{ color: '#fff' }} size={30} />
             </TouchableOpacity>
           </Col>
         </Row>
