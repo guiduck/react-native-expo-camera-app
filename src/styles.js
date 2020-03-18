@@ -86,5 +86,21 @@ export default StyleSheet.create({
   galleryText: {
     color: '#fff',
     fontSize: 40
+  },
+  modalContent: {
+    flex: 1
+  },
+  modalToggle: {
+    marginTop: 50,
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: '#f2f2f2',
+    padding: 10,
+    borderRadius: 10,
+    alignSelf: 'center'
+  },
+  modalClose: {
+    marginTop: 20,
+    marginBottom: 0
   }
 });
