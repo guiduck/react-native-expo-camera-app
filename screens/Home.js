@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Stylesheet, View, Text, TouchableOpacity, Modal } from 'react-native';
 import styles from '../src/styles';
 import { materialIcons, MaterialIcons } from '@expo/vector-icons';
+import MailForm from './MailForm';
 
 export default function Home({ navigation }) {
   const [modalOpen, setModalOpen] = useState(false);
@@ -17,8 +18,7 @@ export default function Home({ navigation }) {
             style={{ ...styles.modalToggle, ...styles.modalClose }}
             onPress={() => setModalOpen(false)}
           />
-
-          <Text> Hello hai hai</Text>
+          <MailForm />
         </View>
       </Modal>
 

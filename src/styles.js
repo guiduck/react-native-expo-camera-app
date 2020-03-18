@@ -102,5 +102,12 @@ export default StyleSheet.create({
   modalClose: {
     marginTop: 20,
     marginBottom: 0
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    padding: 5,
+    fontSize: 18,
+    borderRadius: 6
   }
 });
