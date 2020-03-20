@@ -116,5 +116,18 @@ export default StyleSheet.create({
     marginBottom: 10,
     marginTop: 6,
     alignSelf: 'flex-start'
+  },
+  button: {
+    borderRadius: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 10,
+    backgroundColor: '#f01d71'
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 16,
+    textAlign: 'center'
   }
 });
