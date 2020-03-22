@@ -13,11 +13,11 @@ const mailSchema = yup.object({
   email: yup
     .string()
     .required()
-    .min(11),
+    .min(4),
   message: yup
     .string()
     .required()
-    .min(40)
+    .min(4)
 });
 
 export default function MailForm({ addMail }) {

@@ -4,9 +4,11 @@ import {
   View,
   Text,
   TouchableOpacity,
+  FlatList,
   Modal,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Button
 } from 'react-native';
 import styles from '../src/styles';
 import { materialIcons, MaterialIcons } from '@expo/vector-icons';
@@ -14,7 +16,11 @@ import MailForm from './MailForm';
 
 export default function Home({ navigation }) {
   const [modalOpen, setModalOpen] = useState(false);
-  const [mails, setMails] = useState([]);
+  const [mails, setMails] = useState([
+    { name: 'guiduck', email: 'gck02@gil.com', message: 'thi aisdap' },
+    { name: 'vittis', email: 'bit1709@snjldslj', message: 'shit aidjasojdo' },
+    { name: 'gugu', email: 'aosdnmsai@aodsioa', message: 'reverse osmosis bs' }
+  ]);
 
   //function to handle key and store mail
   const addMail = mail => {
@@ -23,6 +29,10 @@ export default function Home({ navigation }) {
       return [mail, ...currentMails];
     });
     setModalOpen(false);
+  };
+
+  const navHandler = () => {
+    navigation.navigate('MailDetails');
   };
 
   return (
@@ -48,6 +58,19 @@ export default function Home({ navigation }) {
         style={styles.modalToggle}
         onPress={() => setModalOpen(true)}
       />
+      <Text style={styles.titleText}> Home Screen </Text>
+      <FlatList
+        data={mails}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate('MailDetails', item)}
+          >
+            <Text style={styles.titleText}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
+
+      <Button title='see mail details' onPress={navHandler} />
     </View>
   );
 }
